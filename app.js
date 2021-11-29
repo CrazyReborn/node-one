@@ -1,13 +1,33 @@
-const http = require('http');
+const https = require('https');
 
-const port = process.env.PORT || 3000;
+const data = new TextEncoder().encode(
+    JSON.stringify({
+        todo: 'But the milk 🍼'
+    })
+)
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end('<h1>Hello, World!</h1>');
+const options = {
+    hostname: 'whatever.com',
+    port: 443,
+    path: '/todos',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application.json',
+        'Content-Length': data.length
+    }
+}
+
+const req = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`);
+
+    res.on('data', d => {
+        proccess.stdout.write(d);
+    })
 })
 
-server.listen(port, () => {
-    console.log('Server is running at port 3000');
+req.on('error', error => {
+    console.error(error);
 })
+
+req.write(data);
+req.end();
