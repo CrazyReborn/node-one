@@ -1,10 +1,6 @@
-const EventEmitter = require('events');
-const eventEmitter = new EventEmitter();
+let i = 0;
 
-eventEmitter.on('start', num => {
-    console.log(`started ${num}`);
-})
-
-console.log('here we go');
-
-eventEmitter.emit('start', 34)
+setInterval(() => {
+    console.log('iteration ' + i);
+    i++;
+}, 1000)
