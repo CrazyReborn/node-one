@@ -1,33 +1,11 @@
-const https = require('https');
+const fs = require('fs');
 
-const data = new TextEncoder().encode(
-    JSON.stringify({
-        todo: 'But the milk 🍼'
-    })
-)
+const content = 'Some content again';
 
-const options = {
-    hostname: 'whatever.com',
-    port: 443,
-    path: '/todos',
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application.json',
-        'Content-Length': data.length
+fs.readFile('test.txt', 'utf8', (data, err) => {
+    if(err) {
+        console.error(err);
+        return;
     }
-}
-
-const req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`);
-
-    res.on('data', d => {
-        proccess.stdout.write(d);
-    })
+    console.log(data);
 })
-
-req.on('error', error => {
-    console.error(error);
-})
-
-req.write(data);
-req.end();
