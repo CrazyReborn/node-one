@@ -1,11 +1,10 @@
-const fs = require('fs');
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
 
-const content = 'Some content again';
-
-fs.readFile('test.txt', 'utf8', (data, err) => {
-    if(err) {
-        console.error(err);
-        return;
-    }
-    console.log(data);
+eventEmitter.on('start', num => {
+    console.log(`started ${num}`);
 })
+
+console.log('here we go');
+
+eventEmitter.emit('start', 34)
